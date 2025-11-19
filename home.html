@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ketan Thakor — Portfolio</title>
+<meta name="description" content="Ketan Thakor — Software Developer portfolio" />
+<style>
+  /* ========= Root / Theme ========= */
+  :root{
+    --bg-1: #05060a;
+    --bg-2: #071025;
+    --neon-a: #00E6FF;
+    --neon-b: #7B5CFF;
+    --card-bg: rgba(10,12,18,0.45);
+    --glass-blur: 10px;
+    --white: #eaf6ff;
+    --muted: rgba(234,246,255,0.06);
+    --radius: 18px;
+    --max-width:1200px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color:var(--white);
+    background: linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+    scroll-behavior:smooth;
+  }
+
+  /* ========= Global layout ========= */
+  header.site-header{
+    position:fixed; top:0; left:0; right:0; height:64px; display:flex; align-items:center; justify-content:center; z-index:60;
+    background: linear-gradient(180deg, rgba(2,4,8,0.65), rgba(2,4,8,0.3));
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid rgba(255,255,255,0.02);
+  }
+  .nav-inner{width:100%; max-width:var(--max-width); display:flex; align-items:center; justify-content:space-between; padding:0 1rem;}
+  .brand{font-weight:800; letter-spacing:0.3px; color:var(--neon-a); text-shadow:0 6px 18px rgba(0,230,255,0.06)}
+  .nav{display:flex; gap:18px; align-items:center}
+  .nav a{color:var(--white); text-decoration:none; padding:8px 10px; border-radius:8px; font-weight:600; opacity:0.95}
+  .nav a:hover, .nav a:focus{color:var(--neon-b); box-shadow: 0 8px 32px rgba(123,92,255,0.06)}
+  .nav a::after{content:''; display:block; height:2px; background:transparent; transition:width .28s ease, background .28s; width:0; margin-top:6px; border-radius:2px;}
+  .nav a:hover::after{width:100%; background:linear-gradient(90deg,var(--neon-a), var(--neon-b));}
+
+  main{padding-top:84px; min-height:100vh; position:relative; z-index:10;}
+
+  .site-wrap{max-width:var(--max-width); margin:0 auto; padding:48px 20px 80px; display:flex; flex-direction:column; gap:48px; position:relative; z-index:12;}
+
+  /* ========= Card style sections (neon cyber) ========= */
+  .card{
+    position:relative;
+    background: linear-gradient(180deg, rgba(7,8,12,0.5), rgba(6,8,14,0.35));
+    border-radius:20px;
+    padding:28px;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.6), inset 0 0 30px rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.03);
+    overflow:visible;
+    transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s;
+  }
+  .card.neon{
+    background: linear-gradient(180deg, rgba(5,6,10,0.48), rgba(8,10,18,0.25));
+    border-radius:22px;
+    box-shadow: 0 18px 60px rgba(0,0,0,0.6), 0 0 40px rgba(0,0,0,0.25);
+  }
+  .card::before{
+    /* neon border */
+    content:"";
+    position:absolute; inset:-2px;
+    border-radius:22px;
+    background: linear-gradient(90deg, rgba(0,230,255,0.12), rgba(123,92,255,0.08));
+    filter: blur(12px);
+    opacity:0.9;
+    z-index:-2;
+    mix-blend-mode:screen;
+  }
+  .card::after{
+    content:"";
+    position:absolute; inset:1px;
+    border-radius:20px;
+    pointer-events:none;
+    z-index:-1;
+    background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(255,255,255,0.01));
+  }
+
+  /* ========= Specific section layouts ========= */
+  .hero-grid{display:grid; grid-template-columns: 1fr 420px; gap:28px; align-items:center;}
+  @media (max-width:940px){ .hero-grid{grid-template-columns:1fr} }
+
+  .hero-left h1{font-size:clamp(1.8rem,4.6vw,3rem); margin:0 0 8px; line-height:1.02}
+  .name-highlight{color:var(--neon-a); display:inline-block; white-space:nowrap; overflow:hidden; border-right:2px solid rgba(255,255,255,0.04); padding-right:2px; font-weight:800; text-shadow: 0 6px 20px rgba(0,230,255,0.07)}
+
+  .lead{color:rgba(234,246,255,0.9); margin:8px 0 18px; max-width:56ch; line-height:1.5}
+
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap}
+  .btn{--pad:0.6rem 1rem; padding:var(--pad); border-radius:12px; font-weight:700; border:none; cursor:pointer; position:relative; overflow:hidden; transition:transform .18s ease, box-shadow .18s; display:inline-flex; align-items:center; gap:8px}
+  .btn:focus{outline:3px solid rgba(0,230,255,0.12); outline-offset:2px}
+  .btn.primary{background:linear-gradient(90deg,var(--neon-a), var(--neon-b)); color:#06121a; box-shadow: 0 8px 40px rgba(0,230,255,0.08)}
+  .btn.primary:hover{transform:scale(1.04); box-shadow: 0 18px 60px rgba(0,230,255,0.12)}
+  .btn.ghost{background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--white)}
+  .btn.ghost:hover{transform:translateY(-3px); box-shadow:0 14px 40px rgba(123,92,255,0.06)}
+
+  .ripple{position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,0.08) 0, transparent 35%); opacity:0; transition:opacity .36s linear, transform .36s ease}
+
+  /* profile */
+  .photo-wrap{width:320px; height:320px; border-radius:999px; padding:6px; display:flex; align-items:center; justify-content:center; position:relative; overflow:visible}
+  .profile-photo{width:100%;height:100%;object-fit:cover;border-radius:999px; border:2px solid rgba(255,255,255,0.04); box-shadow: 0 20px 80px rgba(0,0,0,0.6)}
+  .photo-neon{position:absolute; inset:auto; left:calc(100% - 240px); top:calc(50% - 150px); width:420px; height:420px; border-radius:50%; filter: blur(38px); pointer-events:none; opacity:0.22; z-index:1;
+    background: radial-gradient(circle at 25% 35%, rgba(0,230,255,0.24), transparent 25%), radial-gradient(circle at 70% 70%, rgba(123,92,255,0.16), transparent 30%) }
+  @media (max-width:940px){ .photo-wrap{width:220px;height:220px} .photo-neon{display:none} }
+
+  /* ========= Section cards inner styles ========= */
+  .section-title{display:flex; align-items:center; gap:12px; margin-bottom:16px}
+  .section-title h3{margin:0; font-size:1.25rem}
+  .section-sub{color:rgba(234,246,255,0.7); font-size:0.95rem; margin-bottom:10px}
+
+  /* projects grid */
+  .projects-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+  @media (max-width:980px){ .projects-grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:600px){ .projects-grid{grid-template-columns:1fr} }
+
+  .project-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.06)); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.02); transition: transform .24s ease, box-shadow .24s}
+  .project-card:hover{transform:translateY(-8px); box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+  .project-title{font-weight:700; margin-bottom:6px}
+  .project-desc{font-size:0.92rem; color:rgba(234,246,255,0.72); margin-bottom:10px}
+  .project-tags{display:flex; gap:8px; flex-wrap:wrap}
+  .tag{background:rgba(255,255,255,0.03); padding:6px 8px; border-radius:8px; font-size:0.78rem; color:rgba(234,246,255,0.8)}
+
+  /* contact form */
+  .form-row{display:flex; gap:12px}
+  @media (max-width:720px){ .form-row{flex-direction:column} }
+  input, textarea{width:100%; padding:10px 12px; border-radius:10px; background:rgba(255,255,255,0.03); color:var(--white); border:1px solid rgba(255,255,255,0.04); font-size:0.95rem}
+  textarea{min-height:120px; resize:vertical}
+  .form-note{font-size:0.9rem;color:rgba(234,246,255,0.66); margin-top:10px}
+
+  /* info banner (appears when button clicked) */
+  .info-banner{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 12px; border-radius:10px; background:linear-gradient(90deg, rgba(0,230,255,0.06), rgba(123,92,255,0.03)); border:1px solid rgba(0,230,255,0.06); color:var(--white); margin-bottom:14px; opacity:0; transform:translateY(-8px); transition:opacity .36s ease, transform .36s ease}
+  .info-banner.show{opacity:1; transform:translateY(0)}
+  .info-close{background:transparent; border:none; color:var(--white); cursor:pointer; font-weight:700}
+
+  /* snow canvas full background */
+  canvas#bgCanvas{position:fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:5; mix-blend-mode:screen; opacity:0.95}
+  @media (prefers-reduced-motion:reduce){ canvas#bgCanvas{display:none} }
+
+  /* footer */
+  footer{color:rgba(234,246,255,0.6); text-align:center; padding:22px 12px; margin-top:18px}
+
+  /* accessibility reduced motion */
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important}
+  }
+
+</style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="nav-inner">
+      <div class="brand">Ketan Thakor</div>
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <a href="#home" data-section="home">Home</a>
+        <a href="#about" data-section="about">About Me</a>
+        <a href="#projects" data-section="projects">Projects</a>
+        <a href="#contact" data-section="contact">Contact Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- background canvas (snow + particles) -->
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+  <main>
+    <div class="site-wrap">
+
+      <!-- HOME -->
+      <section id="home" class="card neon" aria-labelledby="home-title">
+        <div class="hero-grid">
+          <div class="hero-left">
+            <div class="section-title">
+              <div style="width:8px;height:8px;border-radius:3px;background:linear-gradient(180deg,var(--neon-a),var(--neon-b)); box-shadow:0 10px 26px rgba(0,230,255,0.06)"></div>
+              <h3 id="home-title">Home</h3>
+            </div>
+
+            <div id="homeBanner" class="info-banner" aria-live="polite" role="status" style="display:none">
+              <div id="homeBannerText">Welcome — you're viewing the Home section.</div>
+              <button class="info-close" onclick="hideBanner('homeBanner')">Close</button>
+            </div>
+
+            <h1>Hi, I'm <span id="nameText" class="name-highlight">Ketan Thakor</span></h1>
+            <div class="section-sub">Software Developer | Frontend Engineer | UI/UX Innovator</div>
+            <p class="lead">I create modern, performance-minded web apps with smooth micro-interactions and thoughtful UI. I specialize in frontend development, animations, and building delightful user experiences.</p>
+
+            <div class="cta-row" style="margin-top:10px">
+              <button class="btn primary" id="viewProjects">View Projects <span class="ripple"></span></button>
+              <button class="btn ghost" id="contactCTA">Contact Me <span class="ripple"></span></button>
+              <button class="btn ghost" id="aboutCTA">About Me <span class="ripple"></span></button>
+            </div>
+          </div>
+
+          <aside class="hero-right">
+            <div class="photo-wrap" id="photoWrap" tabindex="0" aria-label="Profile photo">
+              <img class="profile-photo" src="./logo1/img2.jpg" alt="Ketan Thakor — Software Developer">
+            </div>
+            <div class="photo-neon" aria-hidden="true"></div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="card neon" aria-labelledby="about-title">
+        <div class="section-title">
+          <div style="width:8px;height:8px;border-radius:3px;background:linear-gradient(90deg,var(--neon-a),var(--neon-b)); box-shadow:0 12px 30px rgba(123,92,255,0.06)"></div>
+          <h3 id="about-title">About Me</h3>
+        </div>
+
+        <div id="aboutBanner" class="info-banner" style="display:none">
+          <div id="aboutBannerText">I’m Ketan — a developer focused on interactive frontend experiences.</div>
+          <button class="info-close" onclick="hideBanner('aboutBanner')">Close</button>
+        </div>
+
+        <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap">
+          <div style="flex:1; min-width:260px">
+            <p class="section-sub">A little background</p>
+            <p style="color:rgba(234,246,255,0.8); line-height:1.6;">
+              I’m a software developer who loves building polished user interfaces with clean, maintainable code.
+              My toolkit includes JavaScript, React, HTML/CSS, and animation libraries when needed. I enjoy solving problems and turning ideas into delightful experiences.
+            </p>
+          </div>
+
+          <div style="width:360px; min-width:220px">
+            <p class="section-sub">Skills</p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">React</span>
+              <span class="tag">Node</span>
+              <span class="tag">UI/UX</span>
+            </div>
+
+            <p style="margin-top:14px" class="section-sub">Experience</p>
+            <div style="color:rgba(234,246,255,0.78);">
+              <strong>Frontend Engineer</strong> — Built interactive dashboards and polished marketing sites.<br>
+              <small style="color:rgba(234,246,255,0.6)">3+ years experience</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section id="projects" class="card neon" aria-labelledby="projects-title">
+        <div class="section-title">
+          <div style="width:8px;height:8px;border-radius:3px;background:linear-gradient(90deg,var(--neon-b),var(--neon-a)); box-shadow:0 12px 30px rgba(0,230,255,0.06)"></div>
+          <h3 id="projects-title">Projects</h3>
+        </div>
+
+        <div id="projectsBanner" class="info-banner" style="display:none">
+          <div id="projectsBannerText">Projects loaded — explore them below.</div>
+          <button class="info-close" onclick="hideBanner('projectsBanner')">Close</button>
+        </div>
+
+        <div class="projects-grid" style="margin-top:8px">
+          <!-- Project 1 -->
+          <article class="project-card" tabindex="0">
+            <div class="project-title">Interactive Dashboard</div>
+            <div class="project-desc">A responsive analytics dashboard with real-time charts and smooth micro-interactions.</div>
+            <div class="project-tags">
+              <span class="tag">React</span><span class="tag">D3</span><span class="tag">WebSocket</span>
+            </div>
+            <div style="margin-top:10px; display:flex; gap:8px">
+              <button class="btn ghost" onclick="showProjectInfo(1)">Details</button>
+              <a class="btn primary" href="#" onclick="event.preventDefault(); showProjectInfo(1)">View Live</a>
+            </div>
+          </article>
+          <!-- Project 2 -->
+          <article class="project-card" tabindex="0">
+            <div class="project-title">E-commerce UI</div>
+            <div class="project-desc">Polished product listing and checkout flows with motion design and accessibility in mind.</div>
+            <div class="project-tags">
+              <span class="tag">Next.js</span><span class="tag">Tailwind</span><span class="tag">Stripe</span>
+            </div>
+            <div style="margin-top:10px; display:flex; gap:8px">
+              <button class="btn ghost" onclick="showProjectInfo(2)">Details</button>
+              <a class="btn primary" href="#" onclick="event.preventDefault(); showProjectInfo(2)">View Live</a>
+            </div>
+          </article>
+          <!-- Project 3 -->
+          <article class="project-card" tabindex="0">
+            <div class="project-title">Micro-Interaction Library</div>
+            <div class="project-desc">Small, reusable animated UI components focused on performance and accessibility.</div>
+            <div class="project-tags">
+              <span class="tag">JS</span><span class="tag">CSS</span><span class="tag">Open Source</span>
+            </div>
+            <div style="margin-top:10px; display:flex; gap:8px">
+              <button class="btn ghost" onclick="showProjectInfo(3)">Details</button>
+              <a class="btn primary" href="#" onclick="event.preventDefault(); showProjectInfo(3)">View Live</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="card neon" aria-labelledby="contact-title">
+        <div class="section-title">
+          <div style="width:8px;height:8px;border-radius:3px;background:linear-gradient(90deg,var(--neon-a),var(--neon-b)); box-shadow:0 12px 30px rgba(123,92,255,0.06)"></div>
+          <h3 id="contact-title">Contact</h3>
+        </div>
+
+        <div id="contactBanner" class="info-banner" style="display:none">
+          <div id="contactBannerText">Use the form below or email me at <strong>youremail@example.com</strong>.</div>
+          <button class="info-close" onclick="hideBanner('contactBanner')">Close</button>
+        </div>
+
+        <form id="contactForm" onsubmit="submitContact(event)" style="margin-top:12px">
+          <div class="form-row">
+            <input id="cname" name="name" placeholder="Your name" required />
+            <input id="cemail" name="email" type="email" placeholder="Your email" required />
+          </div>
+          <div style="margin-top:10px">
+            <textarea id="cmsg" name="message" placeholder="Message" required></textarea>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:12px; align-items:center">
+            <button class="btn primary" type="submit">Send Message <span class="ripple"></span></button>
+            <div class="form-note">I'll respond within a few days — thank you!</div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    Designed &amp; Built by Ketan Thakor © 2025
+  </footer>
+
+<script>
+/* ======= Reduced motion check ======= */
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ======= Name reveal (simple / accessible) ======= */
+(function nameReveal(){
+  const el = document.getElementById('nameText');
+  if(!el) return;
+  if(reduceMotion){ el.classList.add('revealed'); return; }
+  const text = el.textContent.trim();
+  el.textContent = '';
+  let i=0;
+  const speed = 45;
+  function step(){
+    if(i<=text.length){
+      el.textContent = text.slice(0,i);
+      i++;
+      setTimeout(step,speed);
+    }
+  }
+  // start right away
+  step();
+})();
+
+/* ======= Navigation & CTA handling (scroll + show banner) ======= */
+const navLinks = document.querySelectorAll('.nav a');
+navLinks.forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const target = a.getAttribute('href');
+    const id = target.replace('#','');
+    const el = document.getElementById(id);
+    if(!el) return;
+    // smooth scroll offset to account for fixed header
+    const headerOffset = 74;
+    const rect = el.getBoundingClientRect();
+    const offsetTop = window.pageYOffset + rect.top - headerOffset;
+    window.scrollTo({top: offsetTop, behavior:'smooth'});
+    // show info banner for that section
+    showSectionBanner(id);
+  });
+});
+
+/* CTA buttons */
+document.getElementById('viewProjects').addEventListener('click', ()=>{
+  openSectionFromCTA('projects','projectsBanner','Projects loaded — explore them below.');
+});
+document.getElementById('contactCTA').addEventListener('click', ()=>{
+  openSectionFromCTA('contact','contactBanner','Contact form opened — drop a message below.');
+});
+document.getElementById('aboutCTA').addEventListener('click', ()=>{
+  openSectionFromCTA('about','aboutBanner','About section — a short bio is shown.');
+});
+
+function openSectionFromCTA(sectionId, bannerId, bannerMsg){
+  const el = document.getElementById(sectionId);
+  if(!el) return;
+  const headerOffset = 74;
+  const rect = el.getBoundingClientRect();
+  const offsetTop = window.pageYOffset + rect.top - headerOffset;
+  window.scrollTo({top: offsetTop, behavior:'smooth'});
+  // show banner text and display
+  const banner = document.getElementById(bannerId);
+  if(banner){
+    document.getElementById(bannerId + 'Text')?.textContent && (document.getElementById(bannerId + 'Text').textContent = bannerMsg);
+    showBanner(bannerId);
+  }
+  // focus contact form if contact section
+  if(sectionId === 'contact'){
+    setTimeout(()=> document.getElementById('cname')?.focus(), 600);
+  }
+}
+
+/* Show a banner in the target section */
+function showSectionBanner(sectionId){
+  const bannerMap = {home:'homeBanner', about:'aboutBanner', projects:'projectsBanner', contact:'contactBanner'};
+  const id = bannerMap[sectionId];
+  if(id) {
+    // pick a small message for each if not already present
+    const dflt = {
+      home: "Welcome — you're viewing the Home section.",
+      about: "I’m Ketan — a developer focused on interactive frontend experiences.",
+      projects: "Projects loaded — explore them below.",
+      contact: "Use the form below or email me."
+    };
+    const banner = document.getElementById(id);
+    if(banner){
+      const txtEl = document.getElementById(id + 'Text');
+      if(txtEl) txtEl.textContent = txtEl.textContent || dflt[sectionId];
+      showBanner(id);
+    }
+  }
+}
+
+/* Show/hide banner utility */
+function showBanner(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.style.display = 'flex';
+  // ensure animation class
+  setTimeout(()=> el.classList.add('show'), 20);
+  // auto-hide after 6s
+  clearTimeout(el._hideTimeout);
+  el._hideTimeout = setTimeout(()=> hideBanner(id), 6000);
+}
+function hideBanner(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.classList.remove('show');
+  setTimeout(()=> { el.style.display = 'none'; }, 360);
+}
+
+/* ======= Project details quick popup (simple) ======= */
+function showProjectInfo(n){
+  const titles = {
+    1: "Interactive Dashboard — Details",
+    2: "E-commerce UI — Details",
+    3: "Micro-Interaction Library — Details"
+  };
+  const details = {
+    1: "Real-time charts, filters, and export options. Built with React and D3, optimized for large datasets.",
+    2: "Responsive product pages, checkout flow, and smooth animations. Built with Next.js and Tailwind.",
+    3: "Small, accessible UI components for micro-interactions (buttons, toasts, loaders)."
+  };
+  // show as projects banner message
+  const banner = document.getElementById('projectsBanner');
+  if(banner){
+    document.getElementById('projectsBannerText').innerHTML = `<strong>${titles[n]}</strong> — ${details[n]}`;
+    showBanner('projectsBanner');
+    // scroll to top of projects card so banner visible
+    const el = document.getElementById('projects');
+    const headerOffset = 74;
+    const rect = el.getBoundingClientRect();
+    const offsetTop = window.pageYOffset + rect.top - headerOffset;
+    window.scrollTo({top: offsetTop, behavior:'smooth'});
+  }
+}
+
+/* ======= Contact form submit (local demo) ======= */
+function submitContact(e){
+  e.preventDefault();
+  const name = document.getElementById('cname').value.trim();
+  const email = document.getElementById('cemail').value.trim();
+  const msg = document.getElementById('cmsg').value.trim();
+  if(!name || !email || !msg) {
+    alert('Please fill all fields.');
+    return;
+  }
+  // simulate send
+  const banner = document.getElementById('contactBanner');
+  if(banner){
+    document.getElementById('contactBannerText').innerHTML = `Thanks <strong>${escapeHtml(name)}</strong> — your message has been noted. I'll get back to <strong>${escapeHtml(email)}</strong> soon.`;
+    showBanner('contactBanner');
+  }
+  // clear
+  document.getElementById('contactForm').reset();
+}
+
+/* small escape to avoid injecting user text into HTML */
+function escapeHtml(s){ return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+/* ======= Button ripple effect ======= */
+document.addEventListener('pointerdown', (e)=>{
+  const b = e.target.closest && e.target.closest('.btn');
+  if(!b) return;
+  const rect = b.getBoundingClientRect();
+  const x = (e.clientX - rect.left) + 'px';
+  const y = (e.clientY - rect.top) + 'px';
+  b.style.setProperty('--x', x);
+  b.style.setProperty('--y', y);
+  const r = b.querySelector('.ripple');
+  if(!r) return;
+  r.style.opacity = '1';
+  r.style.transform = 'scale(0.98)';
+  setTimeout(()=> { r.style.opacity = '0'; r.style.transform='scale(1)'; }, 320);
+});
+
+/* ======= Profile tilt micro interaction ======= */
+(function photoTilt(){
+  const wrap = document.getElementById('photoWrap');
+  if(!wrap || reduceMotion) return;
+  let bounds = wrap.getBoundingClientRect();
+  function update(){ bounds = wrap.getBoundingClientRect(); }
+  window.addEventListener('resize', update);
+  wrap.addEventListener('pointermove', (ev)=>{
+    const cx = bounds.left + bounds.width/2;
+    const cy = bounds.top + bounds.height/2;
+    const dx = (ev.clientX - cx) / (bounds.width/2);
+    const dy = (ev.clientY - cy) / (bounds.height/2);
+    const rx = (dy * 6).toFixed(2);
+    const ry = (dx * -6).toFixed(2);
+    wrap.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
+    wrap.style.boxShadow = '0 40px 120px rgba(0,0,0,0.6)';
+  });
+  wrap.addEventListener('pointerleave', ()=> { wrap.style.transform=''; wrap.style.boxShadow=''; });
+  wrap.addEventListener('focus', ()=> wrap.style.transform='translateY(-6px) scale(1.02)');
+  wrap.addEventListener('blur', ()=> wrap.style.transform='');
+})();
+
+/* ======= Snow + Particles Canvas (full page) ======= */
+(function canvasLayer(){
+  if(reduceMotion) return;
+  const canvas = document.getElementById('bgCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w=0,h=0,DPR=Math.max(1,window.devicePixelRatio||1);
+  function resize(){
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = Math.floor(w * DPR);
+    canvas.height = Math.floor(h * DPR);
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+  resize(); window.addEventListener('resize', ()=> { resize(); init(); });
+
+  let particles = [], snow = [];
+  const pxCount = Math.min(120, Math.floor(w/10));
+  const snowCount = Math.min(260, Math.floor(w/4));
+
+  function rand(a,b){ return Math.random()*(b-a)+a; }
+
+  function init(){
+    particles = []; snow = [];
+    for(let i=0;i<pxCount;i++){
+      particles.push({ x:Math.random()*w, y:Math.random()*h, r:rand(0.6,2.6), vx:rand(-0.35,0.35), vy:rand(-0.25,0.25) });
+    }
+    for(let i=0;i<snowCount;i++){
+      snow.push({ x:Math.random()*w, y:Math.random()*h, r:rand(0.6,3.2), vy:rand(0.4,1.6), vx:rand(-0.7,0.7), t:rand(0,Math.PI*2) });
+    }
+  }
+  init();
+
+  const pointer = {x:-9999,y:-9999,active:false};
+  window.addEventListener('pointermove',(e)=>{ pointer.x=e.clientX; pointer.y=e.clientY; pointer.active=true; });
+  window.addEventListener('pointerdown',()=> pointer.active=true);
+  window.addEventListener('pointerup',()=> pointer.active=false);
+
+  function step(){
+    ctx.clearRect(0,0,w,h);
+    // subtle background gradient glow
+    const g = ctx.createLinearGradient(0,0,w,h);
+    g.addColorStop(0, "rgba(0,10,20,0.03)");
+    g.addColorStop(1, "rgba(10,8,18,0.03)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,w,h);
+
+    // particles
+    for(let p of particles){
+      const dx = p.x - pointer.x, dy = p.y - pointer.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(pointer.active && dist < 160){
+        const f = (160-dist)/160;
+        p.vx += (dx/dist)*0.35*f;
+        p.vy += (dy/dist)*0.35*f;
+      }
+      p.x += p.vx * 0.9;
+      p.y += p.vy * 0.9;
+      if(p.x < -20) p.x = w+20;
+      if(p.x > w+20) p.x = -20;
+      if(p.y < -20) p.y = h+20;
+      if(p.y > h+20) p.y = -20;
+
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(0,230,255,0.06)';
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+    }
+
+    // snow
+    for(let s of snow){
+      s.t += 0.012;
+      s.x += s.vx + Math.sin(s.t)*0.6;
+      s.y += s.vy;
+      if(s.y > h+10){ s.y = -10; s.x = Math.random()*w; }
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255,255,255,0.88)';
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
+    }
+
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
+
+/* ======= small keyboard focus UX for accessibility ======= */
+(function focusOutline(){
+  function onFirstTab(e){
+    if(e.key === 'Tab'){ document.body.classList.add('user-tabbing'); window.removeEventListener('keydown', onFirstTab); }
+  }
+  window.addEventListener('keydown', onFirstTab);
+})();
+
+</script>
+</body>
+</html>
